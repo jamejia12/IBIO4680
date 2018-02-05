@@ -18,7 +18,7 @@ En conlcusión, dice qué tipo de sheel se debe usar para hacer uso de un archiv
 
 Para lograr obtener esto se utilizó el comando cat /etc/passwd, el cual da la información de todos los usuarios presentes en el servidor.
 
-![Usuarios](/home/lubuntu/Downloads/3.png)
+![Usuarios](https://github.com/jamejia12/IBIO4680/tree/master/01-Linux/Imagenes/3.png)
 
 La información de los usuarios esta delimitada por *:*. Es decir, hay 7 características obtenidas por dicho comando.
 En su orden son:
@@ -36,7 +36,7 @@ Finalmente, usando wc -l se cuenta y se muestra el número de lineas (y por ende
 Teniendo en cuenta lo explicado en el punto 3, los items de interés son el 1 y el 7 (nombre y shell).
 Para únicamente tener esos items en un txt se uso el comando cut.
 
-![UsersAndShells](/home/lubuntu/Downloads/4_1.png)
+![UsersAndShells](https://github.com/jamejia12/IBIO4680/tree/master/01-Linux/Imagenes/4_1.png)
 
 El comando cut tiene una opción -d que permite especificar cuál es el delimitador en el cual se deben cortar los strings.
 En este caso el delimitador es *:*, como se explicó en el punto 3.
@@ -47,7 +47,7 @@ En este caso, por facilidad se reemplazó con un espacio vacío.
 
 Para ordenar la lista de usuarios por su shell hay que tener en cuenta el campo 2.
 
-![UsersAndShells](/home/lubuntu/Downloads/4_2.png)
+![UsersAndShells](https://github.com/jamejia12/IBIO4680/tree/master/01-Linux/Imagenes/4_2.png)
 
 Sort tiene una opción (-k) que permite elegir bajo qué columna se debe ordenar.
 Usando ello se obtiene la lista final de usuarios ordenada por su tipo de shell.
@@ -57,7 +57,7 @@ cksum da como output un número para un archivo basado en su contenido y en su p
 El script propuesto permite encontrar imágenes exactamente iguales.
 El script busca a través de todos los archivos de imagen presentes en una carpeta.
 
-'''
+```
 # Encuentra todas las imagenes presentes en la maquina, y guarda las rutas y el$
 find . -name '*' -exec file {} \; | grep -o -P '^.+: \w+ image' > imgs.txt
 
@@ -84,5 +84,5 @@ do
       cp $im color_images
    fi
 done
-'''
+```
 
