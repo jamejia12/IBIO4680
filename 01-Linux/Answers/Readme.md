@@ -67,8 +67,8 @@ images=$(cut imgs.txt -d' ' -f1)
 # Recorre todas las rutas de las imagenes.
 
 # La idea es que se pare en una imagen y compare con las otras (doble recorrido).
-# Si el checksum de las dos es igual, que guarde la ruta de la comparada y lo guarde en un txt.
-# Al final se tendran tantos txt como imagenes repetidas.
+# Si el checksum de las dos es igual, que guarde la ruta de la comparada y imprima las rutas en pantalla.
+# Al final se tendran tantas impresiones en pantalla como imagenes repetidas.
 
 for im in ${images[*]}
 do
