@@ -84,53 +84,45 @@ do
       then
           echo $im y $imc son duplicados.
       fi
-   # $? gives the exit code of the last command, in this case grep, it will be zero if a match was found
-   if [ $? -eq 0 ]
-   then
-      echo $im is gray
-   else
-      echo $im is color
-      cp $im color_images
-   fi
    done
 done
 ```
 
 ## Punto 6
-Para descargar la base de datos se utilizo wget con el url del archivo.
+Para descargar la base de datos se utilizó wget con el url del archivo.
 
 ![Sorted](https://github.com/jamejia12/IBIO4680/blob/master/01-Linux/Imagenes/6.png)
 
-Para descomprimirlo se utilizo tar con -xf (extraer y que es un file).
+Para descomprimirlo se utilizó tar con -xf (extraer y que es un file).
 
 ## Punto 7
 **La carpeta descomprimida pesa aproximadamente 71MB.**
-Para ello se utilizo el comando ls -l (muestra en lista) --block-size='MB' (da el tamano de los archivos listados).
+Para ello se utilizó el comando ls -l (muestra en lista) --block-size='MB' (da el tamaño de los archivos listados).
 
 ![Size](https://github.com/jamejia12/IBIO4680/blob/master/01-Linux/Imagenes/7_7.png)
 
-Tambien se intento utilizar los comandos ls -s (size) pero no se sabia en que unidades era el output.
-Otra alternativa fue usar el comando ls -l -h (tamano reconocible por humano), pero el tamano no fue el esperado (69M).
+También se intentó utilizar los comandos ls -s (size) pero no se sabía en qué unidades era el output.
+Otra alternativa fue usar el comando ls -l -h (tamaño reconocible por humano), pero el tamaño no fue el esperado (69M).
 
 
 **Las carpetas test, train y val al interior de la carpeta imgs tienen 500 imagenes.**
-Para ello se uso un wc -l porque se supuso que habia solo imagenes al interior de la carpeta. Esto dio un total de 503 imagenes.
+Para ello se usó un wc -l porque se supusó que habia solo imágenes al interior de la carpeta. Esto dio un total de 503 imágenes.
 
 ![NumImgs](https://github.com/jamejia12/IBIO4680/blob/master/01-Linux/Imagenes/7_1.png)
 
 Sin embargo, al ingresar a las carpetas se observo la presencia de un archivo .db por carpeta.
-Restando esos .db, se tienen las 500 imagenes presentes en el directorio mencionado.
+Restando esos .db, se tienen las 500 imágenes presentes en el directorio mencionado.
 
 ![dbFile](https://github.com/jamejia12/IBIO4680/blob/master/01-Linux/Imagenes/7_2.png)
 ![dbFile](https://github.com/jamejia12/IBIO4680/blob/master/01-Linux/Imagenes/7_3.png)
 ![dbFile](https://github.com/jamejia12/IBIO4680/blob/master/01-Linux/Imagenes/7_4.png)
 
-Para evitar tener que hacer esas comprobaciones manuales se sugiere usar un comando para identificar imagenes como el propuesto en el punto 5.
+Para evitar tener que hacer esas comprobaciones manuales se sugiere usar un comando para identificar imágenes como el propuesto en el punto 5.
 
 ## Punto 8
-**Las imagenes tienen una resolucion de 481x321 o 321x481. El formato es .jpg (JPEG) y estan almacenadas en formato de 8bits.**
+**Las imágenes tienen una resolucion de 481x321 o 321x481. El formato es .jpg (JPEG) y estan almacenadas en formato de 8bits.**
 
-Para ello se utilizo el siguiente codigo:
+Para ello se utilizó el siguiente codigo:
 
 ```
 imgs=$(find train -name *.jpg)
@@ -140,41 +132,41 @@ do
 done
 ```
 
-find encuentra todos los archivos .jpg (que yaa se sabia que eran de ese formato por inspeccion, nuevamente se sugiere usar lo del punto 5).
-Luego recorre dichas imagenes y al usar identify -ping, se obtiene informacion basica de la imagen.
+find encuentra todos los archivos .jpg (que ya se sabía que eran de ese formato por inspección, nuevamente se sugiere usar lo del punto 5).
+Luego recorre dichas imágenes y al usar identify -ping, se obtiene información básica de la imagen.
 
 ## Punto 9
-**Hay 348 imagenes en orientacion landscape.**
-Usando la informacion brindada por identify -ping, se sabe que la resolucion esta en la tercera columna.
-Utilizando lo del punto 4 (cut -d -f3) se obtiene unicamente la resolucion de las imagenes.
+**Hay 348 imágenes en orientación landscape.**
+Usando la información brindada por identify -ping, se sabe que la resolución está en la tercera columna.
+Utilizando lo del punto 4 (cut -d -f3) se obtiene únicamente la resolución de las imágenes.
 
 ![Resolution](https://github.com/jamejia12/IBIO4680/blob/master/01-Linux/Imagenes/9_1.png)
 
-El mismo procedimiento se realizo en las tres carpetas (test, train y val) y se guardo en txt.
+El mismo procedimiento se realizó en las tres carpetas (test, train y val) y se guardó en txt.
 
 ![Resolution](https://github.com/jamejia12/IBIO4680/blob/master/01-Linux/Imagenes/9_2.png)
 
-Finalmente, se sabe que una imagen esta en landscape si su primer numero es mayor al segundo (481*321).
+Finalmente, se sabe que una imagen está en landscape si su primer número es mayor al segundo (481*321).
 Realizando un wc -l en los 3 txt de resoluciones por carpeta, se obtuvo el numero de imagenes en landscape (348).
 
 ![NumLandscape](https://github.com/jamejia12/IBIO4680/blob/master/01-Linux/Imagenes/9_3.png)
 
 
 ## Punto 10
-**Para recortar todas las imagenes de 256x256 se uso convert -gravity Center -crop 256x256+0+0 +repage *.jpg** 
+**Para recortar todas las imagenes de 256x256 se usó convert -gravity Center -crop 256x256+0+0 +repage *.jpg** 
 
 ![Crop](https://github.com/jamejia12/IBIO4680/blob/master/01-Linux/Imagenes/10_3.png)
 
-convert es la herramienta para editar imagenes usando imagemagick.
-La opcion -gravity permite especificar en donde fijarse. En este caso se busca fijarse en el centro.
-La opcion -crop recorta la imagen segun las especificaciones dadas (si no se pone el +0+0 para especificar en que posicion pararse, se crean mas imagenes de las que se deberian crear).
+convert es la herramienta para editar imágenes usando imagemagick.
+La opción -gravity permite especificar en dónde fijarse. En este caso se busca fijarse en el centro.
+La opción -crop recorta la imagen segun las especificaciones dadas (si no se pone el +0+0 para especificar en qué posición pararse, se crean más imágenes de las que se deberían crear).
 *.jpg especifica el formato a recortar.
-+repage borra informacion del borde de la imagen recortada (que el borde se ajuste al recorte).
++repage borra información del borde de la imágen recortada (que el borde se ajuste al recorte).
 
-Usando esta alternativa la imagen queda de 256x256 pero se pierde informacion.
+Usando esta alternativa la imagen queda de 256x256 pero se pierde información.
 
 Para conservar informacion se puede utilizar 'mogrify -resize' o 'convert -crop'.
-Sin embargo, al utilizar estos codigos, la imagen de salida no queda de 256x256 (el canvas queda de esa dimension, pero la imagen como tal queda limitada por las dimensiones originales).
+Sin embargo, al utilizar estos codigos, la imagen de salida no queda de 256x256 (el canvas queda de esa dimensión, pero la imagen como tal queda limitada por las dimensiones originales).
 
 
 ## Referencias
