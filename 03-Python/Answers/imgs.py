@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import scipy.io
 import time
+import cv2
 
 
 start = time.time()
@@ -48,56 +49,27 @@ gTest = 'BSR/BSDS500/data/groundTruth/test/'
 iContents = os.listdir(iTest)
 gContents = os.listdir(gTest)
 
-img1 = mpimg.imread(iTest + iContents[idImgs])
-img2 = mpimg.imread(iTest + iContents[idImgs+1])
-img3 = mpimg.imread(iTest + iContents[idImgs+2])
-img4 = mpimg.imread(iTest + iContents[idImgs+3])
-
-gr1 = scipy.io.loadmat(gTest + gContents[idImgs])
-gr1 = (gr1['groundTruth'])[0,0]
-s1 = gr1['Segmentation'][0,0]
-b1 = gr1['Boundaries'][0,0]
-
-gr2 = scipy.io.loadmat(gTest + gContents[idImgs+1])
-gr2 = (gr2['groundTruth'])[0,0]
-s2 = gr2['Segmentation'][0,0]
-b2 = gr2['Boundaries'][0,0]
-
-gr3 = scipy.io.loadmat(gTest + gContents[idImgs+2])
-gr3 = (gr3['groundTruth'])[0,0]
-s3 = gr3['Segmentation'][0,0]
-b3 = gr3['Boundaries'][0,0]
-
-gr4 = scipy.io.loadmat(gTest + gContents[idImgs+3])
-gr4 = (gr4['groundTruth'])[0,0]
-s4 = gr4['Segmentation'][0,0]
-b4 = gr4['Boundaries'][0,0]
-
+x = [0, 1, 2, 3]
 plt.figure(1)
-plt.subplot(341)
-plt.imshow(img1)
-plt.subplot(342)
-plt.imshow(img2)
-plt.subplot(343)
-plt.imshow(img3)
-plt.subplot(344)
-plt.imshow(img4)
-plt.subplot(345)
-plt.imshow(s1)
-plt.subplot(346)
-plt.imshow(s2)
-plt.subplot(347)
-plt.imshow(s3)
-plt.subplot(348)
-plt.imshow(s4)
-plt.subplot(349)
-plt.imshow(b1)
-plt.subplot(3,4,10)
-plt.imshow(b2)
-plt.subplot(3,4,11)
-plt.imshow(b3)
-plt.subplot(3,4,12)
-plt.imshow(b4)
+for i in x:
+    img = mpimg.imread(iTest + iContents[idImgs +i])
+    plt.subplot(3, 4, i+1)
+    plt.imshow(img)
+    plt.axis('off')
+
+    gr = scipy.io.loadmat(gTest + gContents[idImgs +i])
+    gr = (gr['groundTruth'])[0,0]
+    s = gr['Segmentation'][0,0]
+    b = gr['Boundaries'][0,0]
+
+    plt.subplot(3, 4, i+5)
+    plt.imshow(s)
+    plt.axis('off')
+
+    plt.subplot(3, 4, i+9)
+    plt.imshow(b, cmap="Greys")
+    plt.axis('off')
+
 
 print(time.time() - start, 'segundos')
 plt.show()
