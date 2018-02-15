@@ -1,4 +1,4 @@
-%Importa paquetes necesarios.
+# Importa paquetes necesarios.
 
 import os
 import urllib.request
@@ -12,25 +12,37 @@ import time
 
 start = time.time()
 
-%Descarga el archivo y lo descomprime si es la primera vez que se corre.
+# Descarga el archivo y lo descomprime si es la primera vez que se corre.
 
 actual = os.path.dirname(os.path.abspath(__file__))
-actual = actual + '\BSR_bsds500.tgz'
+info = os.listdir(actual)
 
-url = 'http://www.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/BSR/BSR_bsds500.tgz'
-urllib.request.urlretrieve(url, actual)
+# Verifica si el archivo ya esta descargado.
+down = 1
+for x in info:
+    comp = x.find('BSR')
+    down = comp*down
+    if down == 0:
+        break
 
-tar = tarfile.open(actual, 'r')
-tar.extractall()
-tar.close()
+# Si no esta descargado, lo descarga.
+if down != 0:
+    actual = actual + '\BSR_bsds500.tgz'
+
+    url = 'http://www.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/BSR/BSR_bsds500.tgz'
+    urllib.request.urlretrieve(url, actual)
+
+    tar = tarfile.open(actual, 'r')
+    tar.extractall()
+    tar.close()
 
 
-%Genera el número aleatorio de imágenes que se van a ver.
-from random import randint
+
+# Genera el numero aleatorio de imagenes que se van a ver.
 idImgs = random.randint(0, 196)
 
 
-%Muestra las imágenes aleatorias.
+# Muestra las imagenes aleatorias.
 iTest = 'BSR/BSDS500/data/images/test/'
 gTest = 'BSR/BSDS500/data/groundTruth/test/'
 iContents = os.listdir(iTest)
@@ -86,7 +98,6 @@ plt.subplot(3,4,11)
 plt.imshow(b3)
 plt.subplot(3,4,12)
 plt.imshow(b4)
-plt.show()
-
 
 print(time.time() - start, 'segundos')
+plt.show()
